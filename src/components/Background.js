@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import $ from "jquery"
 
-import { Slide } from "react-slideshow-image";
+import _ from 'lodash'
 
 const pictures = [
   "darkblueskydock.jpeg",
@@ -47,36 +47,31 @@ const pictures = [
   "wetroadnight.jpg",
 ];
 
-
-function doTransition() {
-  $("#backImage").fadeIn()
-}
-
-function selectRandomImage() {
-  return `backgrounds/${pictures[Math.floor(Math.random() * pictures.length)]}`;
-}
-
 function Background() {
-  
-
   const slideImages = pictures.map((picName) => {
-    return {
-      url: `backgrounds/${picName}`,
-      caption: picName
-    };
+    return require(`../assets/backgrounds/${picName}`)
   })
 
+  const doTransition = () => {
+    const image = _.sample(slideImages)
+  
+    $("#frontImage").attr('src', image).fadeIn(1500, 'swing', () => {
+      $("#backImage").attr('src', image);
+      $("#frontImage").css('display', 'none')
+    })
+  }
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      doTransition()
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [])
+
   return (
-    <div className="slide-container">
-      <Slide>
-        {slideImages.map((slideImage, index) => (
-          <div className="each-slide" key={index}>
-            <div style={{ backgroundImage: `url(${slideImage.url})` }}>
-              <span>{slideImage.caption}</span>
-            </div>
-          </div>
-        ))}
-      </Slide>
+    <div className="relative">
+      <img id="frontImage" className="w-full h-auto absolute" style={{'zIndex': -1, 'display': 'none'}} src={_.sample(slideImages)} alt="" />
+      <img id="backImage" className="w-full h-auto absolute" style={{'zIndex': -5}} src={_.sample(slideImages)} alt="" />
     </div>
   );
 }
