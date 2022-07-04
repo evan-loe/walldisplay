@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import $ from "jquery"
 
 import _ from 'lodash'
@@ -48,6 +48,9 @@ const pictures = [
 ];
 
 function Background() {
+
+  const [isGallery, setIsGallery] = useState(false)
+
   const slideImages = pictures.map((picName) => {
     return require(`../assets/backgrounds/${picName}`)
   })
