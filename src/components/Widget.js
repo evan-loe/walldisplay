@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "../assets/css/widget.css"
+import Fadable from "./Fadable";
 
 export class Widget extends Component {
 

@@ -47,7 +47,7 @@ const pictures = [
   "wetroadnight.jpg",
 ];
 
-function Background() {
+function Background(props) {
 
   const [isGallery, setIsGallery] = useState(false)
 
@@ -72,9 +72,12 @@ function Background() {
   }, [])
 
   return (
-    <div className="relative">
-      <img id="frontImage" className="w-full h-auto absolute" style={{'zIndex': -1, 'display': 'none'}} src={_.sample(slideImages)} alt="" />
-      <img id="backImage" className="w-full h-auto absolute" style={{'zIndex': -5}} src={_.sample(slideImages)} alt="" />
+    <div>
+      <div className="relative">
+        <img id="frontImage" className="w-full h-auto absolute" style={{'zIndex': -1, 'display': 'none'}} src={_.sample(slideImages)} alt="" />
+        <img id="backImage" className="w-full h-auto absolute" style={{'zIndex': -5}} src={_.sample(slideImages)} alt="" />
+      </div>
+      { props.children }
     </div>
   );
 }
